@@ -8,7 +8,7 @@
   # Unemployment Rate: https://fred.stlouisfed.org/series/AUST448URN?utm_source=series_page&utm_medium=related_content&utm_term=related_resources&utm_campaign=categories
   # https://fred.stlouisfed.org/series/AUST448UR?utm_source=series_page&utm_medium=related_content&utm_term=other_formats&utm_campaign=other_format
   # https://alfred.stlouisfed.org/series?seid=ATNHPIUS12420Q&utm_source=series_page&utm_medium=related_content&utm_term=related_resources&utm_campaign=alfred
-  # Austin-Round Rock
+  # Los Angeles County
   # Unemployment rate
   # https://fred.stlouisfed.org/series/CALOSA7URN?utm_source=series_page&utm_medium=related_content&utm_term=related_resources&utm_campaign=categories
   #House price index
