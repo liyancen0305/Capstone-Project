@@ -1,3 +1,4 @@
+#####################################################################  Project Proposal ########################################################
 #1. What is the problem you want to solve?
   #An investor is interested in investment property in both Austin, Texas and Los Angeles County. With respect to the data collected for a Metropolitan Area, Round Rock and Los Angeles County, over the years, we present the client the comparison between two cities regarding the investing purpose. 
 #2. Who is your client and why do they care about this problem? In other words, what will your client DO or DECIDE based on your analysis that they wouldn’t have otherwise?
@@ -11,6 +12,15 @@
     # Unemployment rate: https://fred.stlouisfed.org/series/CALOSA7URN?utm_source=series_page&utm_medium=related_content&utm_term=related_resources&utm_campaign=categories
     # House price index: https://fred.stlouisfed.org/series/ATNHPIUS06037A
     # Demographics: https://en.wikipedia.org/wiki/Los_Angeles_County,_California
+  # House Price Index: https://fred.stlouisfed.org/series/ATNHPIUS12420Q
+  # Unemployment Rate: https://fred.stlouisfed.org/series/AUST448URN?utm_source=series_page&utm_medium=related_content&utm_term=related_resources&utm_campaign=categories
+  # https://fred.stlouisfed.org/series/AUST448UR?utm_source=series_page&utm_medium=related_content&utm_term=other_formats&utm_campaign=other_format
+  # https://alfred.stlouisfed.org/series?seid=ATNHPIUS12420Q&utm_source=series_page&utm_medium=related_content&utm_term=related_resources&utm_campaign=alfred
+  # Los Angeles County
+  # Unemployment rate
+  # https://fred.stlouisfed.org/series/CALOSA7URN?utm_source=series_page&utm_medium=related_content&utm_term=related_resources&utm_campaign=categories
+  #House price index
+  #https://fred.stlouisfed.org/series/ATNHPIUS06037A
 
 #4In brief, outline your approach to solving this problem (knowing that this might change later).
  #1.	Data collection
