@@ -1,0 +1,30 @@
+
+
+* Unemployment rate
+
+The unemployment rate is a measure of the prevalence of unemployment and it is calculated as a percentage by dividing the number of unemployed individuals by all 
+individuals currently in the labor force. By comparing with two 
+cities, we can see that both unemployment rate are decreasing, with Los Angeles decreasing in a more stable condition, but Roud Rock's decreasing curve is sharper,
+which means there is a more obvious decreasing in unemployment rate in Round Rock.
+
+During periods of recession, an economy usually experiences a relatively high unemployment rate. According to their data, and line graph, both cities have their
+highest unemployment rates in 2011. We can see that both cities' economy has been hurt dramaticlly due to 2008 depression. Comparatively speaking, Round Rock was 
+recoverd sooner than Los Angeles County
+
+
+* Population Trend
+
+According to both of the datasets, we can see that both populations are increasing, while Round Rock's trend is steadier.
+The population grouth in Los Angeles is getting more slower that Round Rock, which means that Los Angeles county is a pretty developed city where growth potential 
+has been limited.
+On the other side, Population in Round Rock is growing over the the years. Compared with Los Angeles country, Round Rock is far from developed, it is still growing.
+
+
+* House Price Index
+
+The HPI is a broad measure of the movement of single-family house prices. The HPI is a weighted, repeat-sales index, meaning that it measures average price changes
+in repeat sales or refinancings on the same properties. In other words, it means that it measures average price changes in repeat sales or refinancing on the same 
+properties.
+
+Based on the datasets, we can see the both HPIs are on an increasing trend while Round Rock has a higher HPI.
+
