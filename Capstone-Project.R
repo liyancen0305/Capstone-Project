@@ -1,3 +1,7 @@
+library (ggplot2)
+library(plotly)
+library(lubridate)
+library(plotly)
 ##################################################### DATASET INPUT #####################################################################################
 datDir <- "C:/Users/Lishuang Cen/My Documents/Sandbox/Capstone Project/Capstone-Project"
 #--- LA_Unemployment_Original
@@ -41,7 +45,7 @@ Round_Rock_HPI_Original <- read.table(datFile8, header = TRUE, sep= "")
       names(Round_Rock_Unemployment_Original)[1] <- "Year"
       names(LA_Unemployment_Original)[2] <- "Unemployment_Rate"
       names(Round_Rock_Unemployment_Original)[2] <- "Unemployment_Rate"
-  #b. format the years 
+  #b. format the years
       #- only have the first month of every year
       a <- endsWith(as.character(LA_Unemployment_Original$Year), "／1／1")  # Which rows to keep (kp)?
       LA_Unemployment_Clean <- LA_Unemployment_Original[a, ]
@@ -78,12 +82,12 @@ Round_Rock_HPI_Original <- read.table(datFile8, header = TRUE, sep= "")
 # 3. Los_Angeles_Historical_Population_Origianl vs Round_Rock_Historical_Population_Original.
   #a. rename columns
       names(LA_Historical_Population_Original)[2] <- "Population"
-      names(Round_Rock_Historical_Population_Original)[2] <- "Population"    
+      names(Round_Rock_Historical_Population_Original)[2] <- "Population"
       names(LA_Historical_Population_Original)[3] <- "Percentage_Change"
-      names(Round_Rock_Historical_Population_Original)[3] <- "Percentage_Change" 
+      names(Round_Rock_Historical_Population_Original)[3] <- "Percentage_Change"
   #b. delete meaningless rows.
-      LA_Historical_Population_Clean <- LA_Historical_Population_Original[4:18, ]
-      Round_Rock_Historical_Population_Clean <- Round_Rock_Historical_Population_Original[1:15, ]
+      LA_Historical_Population_Clean <- LA_Historical_Population_Original[14:18, ]
+      Round_Rock_Historical_Population_Clean <- Round_Rock_Historical_Population_Original[11:15, ]
   #c. save to a new file
       datFile13 <- paste(datDir, "Los_Angeles_Historical_Population_Clean.csv", sep = "/")
       write.table(LA_Historical_Population_Clean, datFile13)
@@ -93,13 +97,13 @@ Round_Rock_HPI_Original <- read.table(datFile8, header = TRUE, sep= "")
       Historical_Population <- cbind(LA_Historical_Population_Clean, Round_Rock_Historical_Population_Clean[,2:3])
       names(Historical_Population)[4]<- "Population_Round_Rock"
       names(Historical_Population)[5]<- "Percentage_Change_Round_Rock"
-      
+
 # 4. Los_Angeles_HPI_Original.csv vs. Round_Rock_HPI_Original.csv.
     #a. rename columns
       names(LA_HPI_Original)[1] <- "Year"
-      names(Round_Rock_HPI_Original)[1] <- "Year" 
+      names(Round_Rock_HPI_Original)[1] <- "Year"
       names(LA_HPI_Original)[2] <- "HPI"
-      names(Round_Rock_HPI_Original)[2] <- "HPI" 
+      names(Round_Rock_HPI_Original)[2] <- "HPI"
     #b. only remain the first quarter of every year
       d <- endsWith(as.character(Round_Rock_HPI_Original$Year), "1／1")  # Which rows to keep (kp)?
       Round_Rock_HPI_Clean <- Round_Rock_HPI_Original[d,]
@@ -117,47 +121,66 @@ Round_Rock_HPI_Original <- read.table(datFile8, header = TRUE, sep= "")
     #f. combine two dataset
       HPI <- cbind(LA_HPI_Clean, Round_Rock_HPI_Clean[2])
       names(HPI)[3] <- "HPI_Round_Rock"
+      
+#5. LA Dataset combined.
+      LA_Dataset <- merge(LA_Unemployment_Clean, LA_HPI_Clean, by.x = "Year", by.y= "Year", all = TRUE)
+      LA_Dataset_Clean <- LA_Dataset[13:39, ]
+#6. Round Rock Dataset combined.
+      Round_Rock_Dataset <- merge(Round_Rock_Unemployment_Clean, Round_Rock_HPI_Clean, by.x = "Year", by.y= "Year", all = TRUE)
+      Round_Rock_Dataset_Clean <-Round_Rock_Dataset[13:39, ]
 ############################################################### Explanatory Data Anlysis ####################################################################
 # B. Explanatory Data Anlysis
       # 1. Los_Angles_unemployment_Original.csv vs. Round_Rock_Unemployment_Original.csv, Line graph
-
-        Unemployment_line <- ggplot(Unemployment, aes(Year)) +
-                geom_line(aes( y = Unemployment_Rate, colour = "Los Angeles", group = 1))+
-                geom_line(aes( y = Round_Rock_Unemployment_Rate, colour = "Round Rock", group = 1))
-
-        Unemployment_line_Discrete <- ggplot(Unemployment, aes(Year)) +
-          geom_line(aes( y = Unemployment_Rate, colour = "Los Angeles", group = 1))+
-          geom_line(aes( y = Round_Rock_Unemployment_Rate, colour = "Round Rock", group = 1))+ scale_x_discrete(2008,2009)
+        Unemployment_line <- ggplot(Unemployment, aes(x=Year, y= Unemployment_Rate)) +
+                geom_line(aes( y = Unemployment_Rate, colour = "Los Angeles"))+
+                geom_line(aes( y = Round_Rock_Unemployment_Rate, colour = "Round Rock")) +
+                scale_x_continuous(breaks=c(1990,1995,2000,2005,2010,2015,2020)) +
+                ggtitle ("Unemployment Rate Trend From 1990 To 2016")
+     
 
       # 2. Los_Angeles_Demographic_Original.csv vs. Round_Rock_Demographic_Original.csv., Pie chart
         # a. LA_Demographics
           names_LA <- as.character(LA_Demographics_Clean[,1])
           props_LA <- as.numeric(gsub('\\%', '', as.character(LA_Demographics_Clean[,2])))
-          pie(props_LA, labels = names_LA, col = rainbow(length(props)), main = "Los Angeles Demographics")
+          Label_LA <- paste(names_LA, props_LA, "%")
+          pie(props_LA, labels = Label_LA, col = rainbow(length(props)), main = "Los Angeles Demographics\n Year 2016")
         # b. Round_Rock_Demographics
           names_Round_Rock <- as.character(Round_Rock_Demographics_Clean[,1])
           props_Round_Rock <- as.numeric(gsub('\\%', '', as.character(Round_Rock_Demographics_Clean[,2])))
-          pie(props_Round_Rock, labels = names_Round_Rock, col = rainbow(length(props)), main = "Round Rock Demographics")
+          Label_Round_Rock <- paste( names_Round_Rock, props_Round_Rock, "%")
+          pie(props_Round_Rock, labels = Label_Round_Rock, col = rainbow(length(props)), main = "Round Rock Demographics\n Year 2016")
+
+
+      # 3. Los_Angeles_Historical_Population_Origianl vs Round_Rock_Historical_Population_Original, Bar plot
+         
+          ratio_LA <- as.numeric(gsub('\\%', '', as.character(Historical_Population[,3])))
+          ratio_Round_Rock <-  as.numeric(gsub('\\%', '', as.character(Historical_Population[,5])))
           
-
-      # 3. Los_Angeles_Historical_Population_Origianl vs Round_Rock_Historical_Population_Original, Line graph
-
-          Historical_Population_line <- ggplot(Historical_Population, aes(Census)) +
-            geom_line(aes( y = Population, colour = "Los Angeles"), group = 1) +
-            geom_line(aes( y = Population_Round_Rock, colour = "Round Rock"), group = 1)
-
-          Historical_Population_line_ratio <- ggplot(Historical_Population, aes(Census)) +
-            geom_line(aes( y = Percentage_Change, colour = "Los Angeles"), group = 1) +
-            geom_line(aes( y = Percentage_Change_Round_Rock, colour = "Round Rock"), group = 1, position = "stack")
+          Historical_Population_bar <- plot_ly(Historical_Population, x = ~Census, y = ~ratio_LA, text = ~ratio_LA, textposition = 'auto', type = 'bar', name = 'Los Angeles') %>%
+            add_trace(y = ~ratio_Round_Rock, text = ~ratio_Round_Rock, name = 'Round Rock') %>%
+            layout(title = "Historical Population Trend",
+                   yaxis = list(title = "Population Trend Ratio"))
+        
           
       # 4. Los_Angeles_HPI_Original.csv vs. Round_Rock_HPI_Original.csv, Line graph
-          
-          HPI_line <- ggplot(HPI, aes(Year)) +
+
+          HPI_line <- ggplot(HPI, aes(x= Year, y = HPI)) +
             geom_line(aes( y = HPI, colour = "Los Angeles"), group = 1) +
-            geom_line(aes( y = HPI_Round_Rock, colour = "Round Rock"), group = 1)
+            geom_line(aes( y = HPI_Round_Rock, colour = "Round Rock"), group = 1) +
+            scale_x_continuous(breaks=c(1980,1985,1990,1995,2000,2005,2010,2015,2020)) +
+            scale_y_continuous(breaks=c(50,100,150,200,250,300)) +
+            geom_smooth(method = lm) + ggtitle("HPI Trend")
           
-          HPI_line_discrete <- ggplot(HPI, aes(Year)) +
-            geom_line(aes( y = HPI, colour = "Los Angeles"), group = 1) +
-            geom_line(aes( y = HPI_Round_Rock, colour = "Round Rock"), group = 1) + scale_x_discrete(2008,2009)
+        
+      # 5. Combine all LA datasets together
+          Dataset_line_LA <- ggplot(LA_Dataset_Clean, aes(Year)) +
+            geom_line(aes( y = Unemployment_Rate, colour = "Unemployment Rate"), group = 1) +
+            geom_line(aes( y = HPI, colour = "HPI"), group = 1) +
+            ggtitle("Los Angeles - Unemployment Rate & HPI")
           
-#################################################################### END ######################################################################  
+      # 6. Combine all Round Rock datasets together
+          Dataset_line_Round_Rock <- ggplot(Round_Rock_Dataset_Clean, aes(Year)) +
+            geom_line(aes( y = Unemployment_Rate, colour = "Unemployment Rate"), group = 1) +
+            geom_line(aes( y = HPI, colour = "HPI"), group = 1) +
+            ggtitle("Round Rock - Unemployment Rate & HPI")
+#################################################################### END ######################################################################
